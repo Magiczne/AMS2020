@@ -40,7 +40,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     
                     self.cards = result!.cards
                     self.tableViewOutlet.reloadData()
-                    print(self.cards[0])
                 } catch {
                     self.showApiCallError()
                     print("Parsing failure")
