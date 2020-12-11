@@ -8,11 +8,15 @@
 import Alamofire
 import ObjectMapper
 import SwiftyJSON
-import UIKit
+
 
 class CardCell: UITableViewCell {
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var label: UILabel!
+}
+
+class CardTapGestureRecognizer: UITapGestureRecognizer {
+    var image: String = ""
 }
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -77,31 +81,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell") as! CardCell
         let card = self.cards[indexPath.row]
         
+        // Bind data
         cell.img.downloaded(from: card.imageUrl)
         cell.label.text = card.name
+        
+        // Add onTap handler
+        let tapGesture = CardTapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        tapGesture.image = card.imageUrl
+        cell.addGestureRecognizer(tapGesture)
         
         return cell
     }
 
-}
-
-extension UIImageView {
-    func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
-        contentMode = mode
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-                else { return }
-            DispatchQueue.main.async() { [weak self] in
-                self?.image = image
-            }
-        }.resume()
-    }
-    func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
+    @objc func handleTap(_ sender: CardTapGestureRecognizer) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let cardViewController = storyBoard.instantiateViewController(identifier: "CardView") as! CardViewController
+        
+        self.present(cardViewController, animated: true, completion: {
+            cardViewController.loadImage(image: sender.image)
+        })
     }
 }

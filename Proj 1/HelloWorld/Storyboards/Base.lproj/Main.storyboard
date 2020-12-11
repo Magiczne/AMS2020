@@ -60,6 +60,7 @@
                                                         <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                         <bool key="isElement" value="YES"/>
                                                     </accessibility>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="120" id="Mbx-je-mMh"/>
                                                         <constraint firstAttribute="height" constant="178" id="vM6-Py-rOW"/>
@@ -119,6 +120,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="63.768115942028992" y="-129.24107142857142"/>
+        </scene>
+        <!--Card View Controller-->
+        <scene sceneID="jTu-wK-dp4">
+            <objects>
+                <viewController storyboardIdentifier="CardView" id="YRf-Xp-3r6" customClass="CardViewController" customModule="HelloWorld" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gXh-G2-NRO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7P7-Pf-vNA">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2V3-uG-f4z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7P7-Pf-vNA" firstAttribute="width" secondItem="2V3-uG-f4z" secondAttribute="width" id="Ce3-at-jWG"/>
+                            <constraint firstItem="7P7-Pf-vNA" firstAttribute="leading" secondItem="2V3-uG-f4z" secondAttribute="leading" id="QY9-DK-NOn"/>
+                            <constraint firstItem="7P7-Pf-vNA" firstAttribute="top" secondItem="2V3-uG-f4z" secondAttribute="top" id="h6l-wM-qhD"/>
+                            <constraint firstItem="7P7-Pf-vNA" firstAttribute="height" secondItem="2V3-uG-f4z" secondAttribute="height" id="ufz-sE-Gtw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="image" destination="7P7-Pf-vNA" id="Kay-WP-e4C"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6N7-0N-80V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="781.15942028985512" y="-129.24107142857142"/>
         </scene>
     </scenes>
     <resources>
