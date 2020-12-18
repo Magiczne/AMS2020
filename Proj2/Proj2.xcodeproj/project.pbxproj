@@ -14,6 +14,14 @@
 		61B64E9A258CD771004723A3 /* Proj2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61B64E98258CD771004723A3 /* Proj2.xcdatamodeld */; };
 		61B64E9C258CD772004723A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61B64E9B258CD772004723A3 /* Assets.xcassets */; };
 		61B64E9F258CD772004723A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61B64E9D258CD772004723A3 /* LaunchScreen.storyboard */; };
+		61B64EAC258CDE50004723A3 /* FSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64EAB258CDE50004723A3 /* FSensor.swift */; };
+		61B64EAF258CDE8E004723A3 /* FReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64EAE258CDE8E004723A3 /* FReading.swift */; };
+		61B64EB9258CE13D004723A3 /* readings-1000.json in Resources */ = {isa = PBXBuildFile; fileRef = 61B64EB4258CE134004723A3 /* readings-1000.json */; };
+		61B64EBA258CE13D004723A3 /* readings-1000000.json in Resources */ = {isa = PBXBuildFile; fileRef = 61B64EB5258CE13C004723A3 /* readings-1000000.json */; };
+		61B64EBB258CE13D004723A3 /* readings-10.json in Resources */ = {isa = PBXBuildFile; fileRef = 61B64EB6258CE13C004723A3 /* readings-10.json */; };
+		61B64EBC258CE13D004723A3 /* readings-100000.json in Resources */ = {isa = PBXBuildFile; fileRef = 61B64EB7258CE13D004723A3 /* readings-100000.json */; };
+		61B64EBD258CE13D004723A3 /* sensors.json in Resources */ = {isa = PBXBuildFile; fileRef = 61B64EB8258CE13D004723A3 /* sensors.json */; };
+		61B64EC0258CE685004723A3 /* FileTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64EBF258CE685004723A3 /* FileTestCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +34,14 @@
 		61B64E9B258CD772004723A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61B64E9E258CD772004723A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		61B64EA0258CD772004723A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61B64EAB258CDE50004723A3 /* FSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSensor.swift; sourceTree = "<group>"; };
+		61B64EAE258CDE8E004723A3 /* FReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FReading.swift; sourceTree = "<group>"; };
+		61B64EB4258CE134004723A3 /* readings-1000.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "readings-1000.json"; sourceTree = "<group>"; };
+		61B64EB5258CE13C004723A3 /* readings-1000000.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "readings-1000000.json"; sourceTree = "<group>"; };
+		61B64EB6258CE13C004723A3 /* readings-10.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "readings-10.json"; sourceTree = "<group>"; };
+		61B64EB7258CE13D004723A3 /* readings-100000.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "readings-100000.json"; sourceTree = "<group>"; };
+		61B64EB8258CE13D004723A3 /* sensors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sensors.json; sourceTree = "<group>"; };
+		61B64EBF258CE685004723A3 /* FileTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTestCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +74,10 @@
 		61B64E8E258CD771004723A3 /* Proj2 */ = {
 			isa = PBXGroup;
 			children = (
+				61B64EB3258CE07E004723A3 /* Data */,
+				61B64EA9258CDA01004723A3 /* Core Data */,
+				61B64EA8258CD9FB004723A3 /* SQLite */,
+				61B64EA7258CD9F5004723A3 /* Files */,
 				61B64E8F258CD771004723A3 /* AppDelegate.swift */,
 				61B64E91258CD771004723A3 /* SceneDelegate.swift */,
 				61B64E93258CD771004723A3 /* ViewController.swift */,
@@ -68,6 +88,42 @@
 				61B64E98258CD771004723A3 /* Proj2.xcdatamodeld */,
 			);
 			path = Proj2;
+			sourceTree = "<group>";
+		};
+		61B64EA7258CD9F5004723A3 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				61B64EAB258CDE50004723A3 /* FSensor.swift */,
+				61B64EAE258CDE8E004723A3 /* FReading.swift */,
+				61B64EBF258CE685004723A3 /* FileTestCase.swift */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		61B64EA8258CD9FB004723A3 /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SQLite;
+			sourceTree = "<group>";
+		};
+		61B64EA9258CDA01004723A3 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		61B64EB3258CE07E004723A3 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				61B64EB6258CE13C004723A3 /* readings-10.json */,
+				61B64EB4258CE134004723A3 /* readings-1000.json */,
+				61B64EB7258CE13D004723A3 /* readings-100000.json */,
+				61B64EB5258CE13C004723A3 /* readings-1000000.json */,
+				61B64EB8258CE13D004723A3 /* sensors.json */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +183,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61B64EBA258CE13D004723A3 /* readings-1000000.json in Resources */,
+				61B64EBD258CE13D004723A3 /* sensors.json in Resources */,
+				61B64EBC258CE13D004723A3 /* readings-100000.json in Resources */,
 				61B64E9F258CD772004723A3 /* LaunchScreen.storyboard in Resources */,
+				61B64EB9258CE13D004723A3 /* readings-1000.json in Resources */,
+				61B64EBB258CE13D004723A3 /* readings-10.json in Resources */,
 				61B64E9C258CD772004723A3 /* Assets.xcassets in Resources */,
 				61B64E97258CD771004723A3 /* Main.storyboard in Resources */,
 			);
@@ -141,9 +202,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				61B64E94258CD771004723A3 /* ViewController.swift in Sources */,
+				61B64EAF258CDE8E004723A3 /* FReading.swift in Sources */,
 				61B64E90258CD771004723A3 /* AppDelegate.swift in Sources */,
 				61B64E92258CD771004723A3 /* SceneDelegate.swift in Sources */,
+				61B64EAC258CDE50004723A3 /* FSensor.swift in Sources */,
 				61B64E9A258CD771004723A3 /* Proj2.xcdatamodeld in Sources */,
+				61B64EC0258CE685004723A3 /* FileTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
