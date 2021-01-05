@@ -51,6 +51,8 @@ class ViewController: UIViewController {
     @IBAction func onCoreDataTest() {
         self.startMeasure()
         
+        CoreDataTestCase.run("readings-1000")
+        
         self.stopMeasure("Core Data test")
     }
 }

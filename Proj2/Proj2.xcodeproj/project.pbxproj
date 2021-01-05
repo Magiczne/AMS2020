@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		61652AE825A4D98D00017A31 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 61652AE325A4D8A800017A31 /* libsqlite3.tbd */; };
 		61652AED25A4DA3E00017A31 /* SQLiteTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61652AEC25A4DA3E00017A31 /* SQLiteTestCase.swift */; };
+		61652AF025A4E56B00017A31 /* CoreDataCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61652AEF25A4E56B00017A31 /* CoreDataCase.swift */; };
 		61B64E90258CD771004723A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64E8F258CD771004723A3 /* AppDelegate.swift */; };
 		61B64E92258CD771004723A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64E91258CD771004723A3 /* SceneDelegate.swift */; };
 		61B64E94258CD771004723A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64E93258CD771004723A3 /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 		61652AE025A4D83A00017A31 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		61652AE325A4D8A800017A31 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		61652AEC25A4DA3E00017A31 /* SQLiteTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteTestCase.swift; sourceTree = "<group>"; };
+		61652AEF25A4E56B00017A31 /* CoreDataCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCase.swift; sourceTree = "<group>"; };
 		61B64E8C258CD771004723A3 /* Proj2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proj2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61B64E8F258CD771004723A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61B64E91258CD771004723A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		61B64EA9258CDA01004723A3 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				61652AEF25A4E56B00017A31 /* CoreDataCase.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				61B64EAC258CDE50004723A3 /* FSensor.swift in Sources */,
 				61652AED25A4DA3E00017A31 /* SQLiteTestCase.swift in Sources */,
 				61B64E9A258CD771004723A3 /* Proj2.xcdatamodeld in Sources */,
+				61652AF025A4E56B00017A31 /* CoreDataCase.swift in Sources */,
 				61B64EC0258CE685004723A3 /* FileTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
