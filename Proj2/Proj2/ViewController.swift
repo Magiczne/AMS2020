@@ -34,13 +34,15 @@ class ViewController: UIViewController {
     @IBAction func onFileTest() {
         self.startMeasure()
         
-        FileTestCase.run()
+        FileTestCase.run("readings-100000")
         
         self.stopMeasure("File test")
     }
     
     @IBAction func onSQLiteTest() {
         self.startMeasure()
+        
+        SQLiteTestCase.run("readings-1000")
         
         self.stopMeasure("SQLite test")
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 class FileTestCase {
-    static func run() {
+    static func run(_ readings: String) {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.readingFormat)
         
@@ -23,7 +23,7 @@ class FileTestCase {
             }
         }
         
-        if let readingsUrl = Bundle.main.url(forResource: "readings-10", withExtension: "json") {
+        if let readingsUrl = Bundle.main.url(forResource: readings, withExtension: "json") {
             do {
                 let data = try Data(contentsOf: readingsUrl)
                 let jsonData = try decoder.decode([FReading].self, from: data)

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61652AE825A4D98D00017A31 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 61652AE325A4D8A800017A31 /* libsqlite3.tbd */; };
+		61652AED25A4DA3E00017A31 /* SQLiteTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61652AEC25A4DA3E00017A31 /* SQLiteTestCase.swift */; };
 		61B64E90258CD771004723A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64E8F258CD771004723A3 /* AppDelegate.swift */; };
 		61B64E92258CD771004723A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64E91258CD771004723A3 /* SceneDelegate.swift */; };
 		61B64E94258CD771004723A3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64E93258CD771004723A3 /* ViewController.swift */; };
@@ -25,6 +27,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		61652ADC25A4D75F00017A31 /* Proj2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Proj2-Bridging-Header.h"; sourceTree = "<group>"; };
+		61652AE025A4D83A00017A31 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		61652AE325A4D8A800017A31 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		61652AEC25A4DA3E00017A31 /* SQLiteTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteTestCase.swift; sourceTree = "<group>"; };
 		61B64E8C258CD771004723A3 /* Proj2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Proj2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61B64E8F258CD771004723A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		61B64E91258CD771004723A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,17 +55,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61652AE825A4D98D00017A31 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		61652ADF25A4D83A00017A31 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61652AE325A4D8A800017A31 /* libsqlite3.tbd */,
+				61652AE025A4D83A00017A31 /* libsqlite3.0.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		61B64E83258CD771004723A3 = {
 			isa = PBXGroup;
 			children = (
+				61652ADC25A4D75F00017A31 /* Proj2-Bridging-Header.h */,
 				61B64E8E258CD771004723A3 /* Proj2 */,
 				61B64E8D258CD771004723A3 /* Products */,
+				61652ADF25A4D83A00017A31 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +121,7 @@
 		61B64EA8258CD9FB004723A3 /* SQLite */ = {
 			isa = PBXGroup;
 			children = (
+				61652AEC25A4DA3E00017A31 /* SQLiteTestCase.swift */,
 			);
 			path = SQLite;
 			sourceTree = "<group>";
@@ -206,6 +225,7 @@
 				61B64E90258CD771004723A3 /* AppDelegate.swift in Sources */,
 				61B64E92258CD771004723A3 /* SceneDelegate.swift in Sources */,
 				61B64EAC258CDE50004723A3 /* FSensor.swift in Sources */,
+				61652AED25A4DA3E00017A31 /* SQLiteTestCase.swift in Sources */,
 				61B64E9A258CD771004723A3 /* Proj2.xcdatamodeld in Sources */,
 				61B64EC0258CE685004723A3 /* FileTestCase.swift in Sources */,
 			);
@@ -290,6 +310,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Proj2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -344,6 +365,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "Proj2-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};

@@ -8,7 +8,7 @@
 import Foundation
 
 class FReading: Codable {
-    var timestamp: Date
+    var timestamp: String
     var sensor_id: String
     var value: Float
 }
