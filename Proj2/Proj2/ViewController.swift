@@ -12,11 +12,11 @@ class ViewController: UIViewController {
     
     var start: DispatchTime = DispatchTime.now()
     var end: DispatchTime = DispatchTime.now()
+    let file = "readings-1000"
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+    let fileTestCase = FileTestCase()
+    let sqliteTestCase = SQLiteTestCase()
+    let coreDataTestCase = CoreDataTestCase()
     
     func startMeasure() {
         self.start = DispatchTime.now()
@@ -33,27 +33,25 @@ class ViewController: UIViewController {
     
     @IBAction func onFileTest() {
         self.startMeasure()
-        
-        FileTestCase.run("readings-100000")
-        
-        self.stopMeasure("File test")
+        self.fileTestCase.loadData(self.file)
+        self.stopMeasure("File loading test")
     }
     
     @IBAction func onSQLiteTest() {
         self.startMeasure()
-        
-        SQLiteTestCase.run("readings-1000")
-        
-        self.stopMeasure("SQLite test")
+        self.sqliteTestCase.loadData(sensors: self.fileTestCase.sensorsData, readings: self.fileTestCase.readingsData)
+        self.stopMeasure("SQLite loading test")
     }
     
     
     @IBAction func onCoreDataTest() {
         self.startMeasure()
+        self.coreDataTestCase.loadData(sensors: self.fileTestCase.sensorsData, readings: self.fileTestCase.readingsData)
+        self.stopMeasure("Core Data loading test")
         
-        CoreDataTestCase.run("readings-1000")
-        
-        self.stopMeasure("Core Data test")
+        self.startMeasure()
+        self.coreDataTestCase.readData()
+        self.stopMeasure("Core Data read")
     }
 }
 

@@ -8,10 +8,15 @@
 import Foundation
 
 class FileTestCase {
-    static var sensorsData: [FSensor] = []
-    static var readingsData: [FReading] = []
+    var sensorsData: [FSensor]
+    var readingsData: [FReading]
     
-    static func run(_ readings: String) {
+    init () {
+        self.sensorsData = []
+        self.readingsData = []
+    }
+    
+    func loadData (_ file: String) {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.readingFormat)
         
@@ -20,20 +25,18 @@ class FileTestCase {
                 let data = try Data(contentsOf: sensorsUrl)
                 let jsonData = try decoder.decode([FSensor].self, from: data)
                 
-                sensorsData = jsonData
-                print("Sensors count: \(jsonData.count)")
+                self.sensorsData = jsonData
             } catch {
                 print("Sensors error: \(error)")
             }
         }
         
-        if let readingsUrl = Bundle.main.url(forResource: readings, withExtension: "json") {
+        if let readingsUrl = Bundle.main.url(forResource: file, withExtension: "json") {
             do {
                 let data = try Data(contentsOf: readingsUrl)
                 let jsonData = try decoder.decode([FReading].self, from: data)
                 
-                readingsData = jsonData
-                print("Data count: \(jsonData.count)")
+                self.readingsData = jsonData
             } catch {
                 print("Readings error: \(error)")
             }

@@ -8,16 +8,16 @@
 import Foundation
 
 class SQLiteTestCase {
-    static func run (_ readings: String) {
-        let decoder = JSONDecoder()
+    var db: OpaquePointer? = nil
+    
+    func loadData (sensors: [FSensor], readings: [FReading]) {
         let fileUrl = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("database.sqlite")
         
-        var db: OpaquePointer? = nil
-        
-        if sqlite3_open(fileUrl.path, &db) == SQLITE_OK {
-            print("DB Working")
+        if sqlite3_open(fileUrl.path, &self.db) != SQLITE_OK {
+            print("DB not Working")
+            return
         }
         
         let createSensorsSql = """
@@ -36,88 +36,74 @@ class SQLiteTestCase {
             )
         """
         
-        sqlite3_exec(db, createSensorsSql, nil, nil, nil)
-        sqlite3_exec(db, createReadingsSql, nil, nil, nil)
-        sqlite3_exec(db, "DELETE FROM sensors", nil, nil, nil)
-        sqlite3_exec(db, "DELETE FROM readings", nil, nil, nil)
+        sqlite3_exec(self.db, createSensorsSql, nil, nil, nil)
+        sqlite3_exec(self.db, createReadingsSql, nil, nil, nil)
+        sqlite3_exec(self.db, "DELETE FROM sensors", nil, nil, nil)
+        sqlite3_exec(self.db, "DELETE FROM readings", nil, nil, nil)
         
-        if let sensorsUrl = Bundle.main.url(forResource: "sensors", withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: sensorsUrl)
-                let jsonData = try decoder.decode([FSensor].self, from: data)
-                
-                let query = "INSERT INTO sensors VALUES(?,?);"
-                var stmt: OpaquePointer? = nil
-                
-                if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
-                    print("Not working")
-                }
-                
-                for elem in jsonData {
-                    sqlite3_bind_text(stmt, 1, (elem.id as NSString).utf8String, -1, nil)
-                    sqlite3_bind_text(stmt, 2, (elem.description as NSString).utf8String, -1, nil)
-                    
-                    if sqlite3_step(stmt) != SQLITE_DONE {
-                        NSLog("Error %s", sqlite3_errmsg(db))
-                        
-                        sqlite3_finalize(stmt)
-                    }
-                    
-                    sqlite3_reset(stmt)
-                }
-                
-                sqlite3_finalize(stmt)
-            } catch {
-                print("Sensors error: \(error)")
-            }
+        var query = "INSERT INTO sensors VALUES(?,?);"
+        var stmt: OpaquePointer? = nil
+        
+        // Sensors data
+        if sqlite3_prepare_v2(self.db, query, -1, &stmt, nil) != SQLITE_OK {
+            print("Not working")
         }
         
-        if let readingsUrl = Bundle.main.url(forResource: readings, withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: readingsUrl)
-                let jsonData = try decoder.decode([FReading].self, from: data)
-                
-                let query = "INSERT INTO readings VALUES(?, ?, ?)"
-                var stmt: OpaquePointer? = nil
-                
-                if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
-                    print("Not working")
-                }
-                
-                for elem in jsonData {
-                    sqlite3_bind_text(stmt, 1, (elem.timestamp as NSString).utf8String, -1, nil)
-                    sqlite3_bind_text(stmt, 2, (elem.sensor_id as NSString).utf8String, -1, nil)
-                    sqlite3_bind_double(stmt, 3, Double.init(elem.value))
-                    
-                    if sqlite3_step(stmt) != SQLITE_DONE {
-                        NSLog("Error %s", sqlite3_errmsg(db))
-                        
-                        sqlite3_finalize(stmt)
-                    }
-                    
-                    sqlite3_reset(stmt)
-                }
+        for elem in sensors {
+            sqlite3_bind_text(stmt, 1, (elem.id as NSString).utf8String, -1, nil)
+            sqlite3_bind_text(stmt, 2, (elem.description as NSString).utf8String, -1, nil)
+            
+            if sqlite3_step(stmt) != SQLITE_DONE {
+                NSLog("Error %s", sqlite3_errmsg(db))
                 
                 sqlite3_finalize(stmt)
-            } catch {
-                print("Readings error: \(error)")
             }
+            
+            sqlite3_reset(stmt)
         }
         
-//        var stmt: OpaquePointer? = nil
-//        let selectSQL = "SELECT id, description FROM sensors;"
-//        sqlite3_prepare_v2(db, selectSQL, -1, &stmt, nil)
-//
-//        while sqlite3_step(stmt) == SQLITE_ROW {
-//            let id = String(cString: sqlite3_column_text(stmt, 0))
-//            let desc = String(cString: sqlite3_column_text(stmt, 1))
-//
-//            print("Sensor id = \(id), desc = \(desc)")
-//        }
-//
-//        sqlite3_finalize(stmt)
+        sqlite3_finalize(stmt)
         
-        sqlite3_close(db)
-        db = nil
+        // Readings data
+        query = "INSERT INTO readings VALUES(?, ?, ?)"
+        
+        if sqlite3_prepare_v2(self.db, query, -1, &stmt, nil) != SQLITE_OK {
+            print("Not working")
+        }
+        
+        for elem in readings {
+            sqlite3_bind_text(stmt, 1, (elem.timestamp as NSString).utf8String, -1, nil)
+            sqlite3_bind_text(stmt, 2, (elem.sensor_id as NSString).utf8String, -1, nil)
+            sqlite3_bind_double(stmt, 3, Double.init(elem.value))
+            
+            if sqlite3_step(stmt) != SQLITE_DONE {
+                NSLog("Error %s", sqlite3_errmsg(self.db))
+                
+                sqlite3_finalize(stmt)
+            }
+            
+            sqlite3_reset(stmt)
+        }
+        
+        sqlite3_finalize(stmt)
+        
+        sqlite3_close(self.db)
+        self.db = nil
+    }
+    
+    func runTests() {
+        //        var stmt: OpaquePointer? = nil
+        //        let selectSQL = "SELECT id, description FROM sensors;"
+        //        sqlite3_prepare_v2(db, selectSQL, -1, &stmt, nil)
+        //
+        //        while sqlite3_step(stmt) == SQLITE_ROW {
+        //            let id = String(cString: sqlite3_column_text(stmt, 0))
+        //            let desc = String(cString: sqlite3_column_text(stmt, 1))
+        //
+        //            print("Sensor id = \(id), desc = \(desc)")
+        //        }
+        //
+        //        sqlite3_finalize(stmt)
+                
     }
 }
