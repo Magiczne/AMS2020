@@ -35,23 +35,30 @@ class ViewController: UIViewController {
         self.startMeasure()
         self.fileTestCase.loadData(self.file)
         self.stopMeasure("File loading test")
+        
+        self.fileTestCase.largestAndSmallest()
+        self.fileTestCase.avgReading()
+        self.fileTestCase.groupedSensors()
     }
     
     @IBAction func onSQLiteTest() {
         self.startMeasure()
         self.sqliteTestCase.loadData(sensors: self.fileTestCase.sensorsData, readings: self.fileTestCase.readingsData)
         self.stopMeasure("SQLite loading test")
+        
+        self.sqliteTestCase.largestAndSmallest()
+        self.sqliteTestCase.avgReading()
+        self.sqliteTestCase.groupedSensors()
     }
-    
     
     @IBAction func onCoreDataTest() {
         self.startMeasure()
         self.coreDataTestCase.loadData(sensors: self.fileTestCase.sensorsData, readings: self.fileTestCase.readingsData)
         self.stopMeasure("Core Data loading test")
         
-        self.startMeasure()
-        self.coreDataTestCase.readData()
-        self.stopMeasure("Core Data read")
+        self.coreDataTestCase.largestAndSmallest()
+        self.coreDataTestCase.avgReading()
+        self.coreDataTestCase.groupedSensors()
     }
 }
 

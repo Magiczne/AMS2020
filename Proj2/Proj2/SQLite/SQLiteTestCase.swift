@@ -106,4 +106,16 @@ class SQLiteTestCase {
         //        sqlite3_finalize(stmt)
                 
     }
+    
+    func largestAndSmallest () {
+
+    }
+    
+    func avgReading () {
+        
+    }
+    
+    func groupedSensors () {
+        
+    }
 }

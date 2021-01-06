@@ -42,4 +42,16 @@ class FileTestCase {
             }
         }
     }
+    
+    func largestAndSmallest () {
+        
+    }
+    
+    func avgReading () {
+        
+    }
+    
+    func groupedSensors () {
+        
+    }
 }
