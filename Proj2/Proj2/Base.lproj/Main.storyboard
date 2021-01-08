@@ -16,41 +16,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lIU-VR-AjA">
-                                <rect key="frame" x="152" y="174" width="110" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Run SQLite Test"/>
-                                <connections>
-                                    <action selector="onSQLiteTest" destination="BYZ-38-t0r" eventType="touchUpInside" id="bOh-YL-6ac"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vsi-eP-OKW">
-                                <rect key="frame" x="20" y="250" width="374" height="612"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-Bc-LAN">
-                                <rect key="frame" x="165" y="136" width="88" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdf-Bc-LAN">
+                                <rect key="frame" x="163" y="94" width="88" height="30"/>
                                 <state key="normal" title="Run File Test"/>
                                 <connections>
                                     <action selector="onFileTest" destination="BYZ-38-t0r" eventType="touchUpInside" id="AJQ-6T-3ur"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ob6-tn-TbU">
-                                <rect key="frame" x="141" y="212" width="133" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lIU-VR-AjA">
+                                <rect key="frame" x="152" y="139" width="110" height="30"/>
+                                <state key="normal" title="Run SQLite Test"/>
+                                <connections>
+                                    <action selector="onSQLiteTest" destination="BYZ-38-t0r" eventType="touchUpInside" id="bOh-YL-6ac"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ob6-tn-TbU">
+                                <rect key="frame" x="140.5" y="184" width="133" height="30"/>
                                 <state key="normal" title="Run Core Data Test"/>
                                 <connections>
                                     <action selector="onCoreDataTest" destination="BYZ-38-t0r" eventType="touchUpInside" id="4zH-Bu-XnN"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vsi-eP-OKW">
+                                <rect key="frame" x="20" y="229" width="374" height="633"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vsi-eP-OKW" firstAttribute="top" secondItem="Ob6-tn-TbU" secondAttribute="bottom" constant="15" id="6Bq-Gn-qjr"/>
+                            <constraint firstItem="vsi-eP-OKW" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.903382" id="9SV-A0-GQg"/>
+                            <constraint firstItem="Ob6-tn-TbU" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ChF-OR-hqd"/>
+                            <constraint firstItem="lIU-VR-AjA" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="OlT-FK-lmo"/>
+                            <constraint firstItem="rdf-Bc-LAN" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="PTK-fg-497"/>
+                            <constraint firstItem="rdf-Bc-LAN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="PdT-Bl-r51"/>
+                            <constraint firstItem="vsi-eP-OKW" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ZAD-jP-tFD"/>
+                            <constraint firstItem="lIU-VR-AjA" firstAttribute="top" secondItem="rdf-Bc-LAN" secondAttribute="bottom" constant="15" id="gTr-AV-dKh"/>
+                            <constraint firstItem="Ob6-tn-TbU" firstAttribute="top" secondItem="lIU-VR-AjA" secondAttribute="bottom" constant="15" id="il3-So-wWW"/>
+                            <constraint firstItem="vsi-eP-OKW" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="toG-ZE-4Kh"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="textView" destination="vsi-eP-OKW" id="SgK-Xe-Pmh"/>
