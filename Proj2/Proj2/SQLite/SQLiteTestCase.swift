@@ -41,6 +41,8 @@ class SQLiteTestCase {
         sqlite3_exec(self.db, "DELETE FROM sensors", nil, nil, nil)
         sqlite3_exec(self.db, "DELETE FROM readings", nil, nil, nil)
         
+        sqlite3_exec(self.db, "BEGIN TRANSACTION;", nil, nil, nil)
+        
         var query = "INSERT INTO sensors VALUES(?,?);"
         var stmt: OpaquePointer? = nil
         
@@ -86,6 +88,8 @@ class SQLiteTestCase {
         }
         
         sqlite3_finalize(stmt)
+        
+        sqlite3_exec(self.db, "COMMIT TRANSACTION;", nil, nil, nil);
         
         sqlite3_close(self.db)
         self.db = nil
