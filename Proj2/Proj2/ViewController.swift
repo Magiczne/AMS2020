@@ -13,7 +13,8 @@ class ViewController: UIViewController {
     var start: DispatchTime = DispatchTime.now()
     var end: DispatchTime = DispatchTime.now()
     var fileTestRan: Bool = false
-    let file = "readings-100000"
+//    let file = "readings-100000"
+    let file = "readings-1000"
     
     let fileTestCase = FileTestCase()
     let sqliteTestCase = SQLiteTestCase()
@@ -39,7 +40,7 @@ class ViewController: UIViewController {
         
         let message = "\(tag) finished in \(timeInterval) seconds\n"
         
-        self.updateTextViewText(message, clear: true)
+        self.updateTextViewText(message, clear: false)
     }
     
     @IBAction func onFileTest() {
@@ -47,9 +48,17 @@ class ViewController: UIViewController {
         self.fileTestCase.loadData(self.file)
         self.stopMeasure("File loading test")
         
+        self.startMeasure()
         self.updateTextViewText(self.fileTestCase.largestAndSmallest() + "\n")
+        self.stopMeasure("Foo")
+        
+        self.startMeasure()
         self.updateTextViewText(self.fileTestCase.avgReading() + "\n")
+        self.stopMeasure("Bar")
+        
+        self.startMeasure()
         self.updateTextViewText(self.fileTestCase.groupedSensors() + "\n")
+        self.stopMeasure("Baz")
         
         self.fileTestRan = true
     }
@@ -60,13 +69,23 @@ class ViewController: UIViewController {
             return
         }
         
+        self.updateTextViewText("", clear: true)
+        
         self.startMeasure()
         self.sqliteTestCase.loadData(sensors: self.fileTestCase.sensorsData, readings: self.fileTestCase.readingsData)
         self.stopMeasure("SQLite loading test")
         
+        self.startMeasure()
         self.updateTextViewText(self.sqliteTestCase.largestAndSmallest() + "\n")
+        self.stopMeasure("Foo")
+        
+        self.startMeasure()
         self.updateTextViewText(self.sqliteTestCase.avgReading() + "\n")
+        self.stopMeasure("Bar")
+        
+        self.startMeasure()
         self.updateTextViewText(self.sqliteTestCase.groupedSensors() + "\n")
+        self.stopMeasure("Baz")
         
         self.sqliteTestCase.closeDb()
     }
@@ -77,13 +96,23 @@ class ViewController: UIViewController {
             return
         }
         
+        self.updateTextViewText("", clear: true)
+        
         self.startMeasure()
         self.coreDataTestCase.loadData(sensors: self.fileTestCase.sensorsData, readings: self.fileTestCase.readingsData)
         self.stopMeasure("Core Data loading test")
         
+        self.startMeasure()
         self.updateTextViewText(self.coreDataTestCase.largestAndSmallest() + "\n")
+        self.stopMeasure("Foo")
+        
+        self.startMeasure()
         self.updateTextViewText(self.coreDataTestCase.avgReading() + "\n")
+        self.stopMeasure("Bar")
+        
+        self.startMeasure()
         self.updateTextViewText(self.coreDataTestCase.groupedSensors() + "\n")
+        self.stopMeasure("Baz")
     }
 }
 
