@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     var start: DispatchTime = DispatchTime.now()
     var end: DispatchTime = DispatchTime.now()
     var fileTestRan: Bool = false
-    let file = "readings-1000"
+    let file = "readings-100000"
     
     let fileTestCase = FileTestCase()
     let sqliteTestCase = SQLiteTestCase()
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         self.updateTextViewText(self.sqliteTestCase.avgReading() + "\n")
         self.updateTextViewText(self.sqliteTestCase.groupedSensors() + "\n")
         
-        self.sqliteTestCase.closeDb()  
+        self.sqliteTestCase.closeDb()
     }
     
     @IBAction func onCoreDataTest() {
