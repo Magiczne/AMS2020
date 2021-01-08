@@ -67,6 +67,8 @@ class ViewController: UIViewController {
         self.updateTextViewText(self.sqliteTestCase.largestAndSmallest() + "\n")
         self.updateTextViewText(self.sqliteTestCase.avgReading() + "\n")
         self.updateTextViewText(self.sqliteTestCase.groupedSensors() + "\n")
+        
+        self.sqliteTestCase.closeDb()  
     }
     
     @IBAction func onCoreDataTest() {

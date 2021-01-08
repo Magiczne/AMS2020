@@ -82,7 +82,7 @@ class CoreDataTestCase {
         let results = try! self.context.fetch(request)
         let data = results[0] as! [String:Double]
         
-        return "Avg reading: \(data["avg"]!)"
+        return "Average: \(data["avg"]!)"
     }
     
     func groupedSensors () -> String {

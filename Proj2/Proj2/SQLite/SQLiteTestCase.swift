@@ -90,7 +90,9 @@ class SQLiteTestCase {
         sqlite3_finalize(stmt)
         
         sqlite3_exec(self.db, "COMMIT TRANSACTION;", nil, nil, nil);
-        
+    }
+    
+    func closeDb() {
         sqlite3_close(self.db)
         self.db = nil
     }
@@ -112,11 +114,48 @@ class SQLiteTestCase {
     }
     
     func largestAndSmallest () -> String {
-        return ""
+        var smallest = ""
+        var largest = ""
+        var stmt: OpaquePointer? = nil
+        
+        // Smallest
+        var select = "SELECT timestamp FROM readings ORDER BY timestamp ASC;"
+        sqlite3_prepare_v2(self.db, select, -1, &stmt, nil)
+        
+        while sqlite3_step(stmt) == SQLITE_ROW {
+            largest = String(cString: sqlite3_column_text(stmt, 0))
+        }
+        sqlite3_finalize(stmt)
+        
+        // Largest
+        select = "SELECT timestamp FROM readings ORDER BY timestamp DESC;"
+        sqlite3_prepare_v2(self.db, select, -1, &stmt, nil)
+        
+        while sqlite3_step(stmt) == SQLITE_ROW {
+            smallest = String(cString: sqlite3_column_text(stmt, 0))
+        }
+        sqlite3_finalize(stmt)
+        
+        return """
+        Smallest: \(smallest)
+        Largest: \(largest)
+        """
     }
     
     func avgReading () -> String {
-        return ""
+        var stmt: OpaquePointer? = nil
+        let select = "SELECT AVG(value) FROM readings;"
+        sqlite3_prepare_v2(self.db, select, -1, &stmt, nil)
+        
+        var msg = ""
+        while sqlite3_step(stmt) == SQLITE_ROW {
+            let avg = sqlite3_column_double(stmt, 0)
+            
+            msg = "Average: \(avg)"
+        }
+        sqlite3_finalize(stmt)
+        
+        return msg
     }
     
     func groupedSensors () -> String {
