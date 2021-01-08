@@ -159,6 +159,20 @@ class SQLiteTestCase {
     }
     
     func groupedSensors () -> String {
-        return ""
+        var stmt: OpaquePointer? = nil
+        let select = "SELECT sensor_id, AVG(value), COUNT(value) FROM readings GROUP BY sensor_id;"
+        sqlite3_prepare_v2(self.db, select, -1, &stmt, nil)
+        
+        var msg = ""
+        while sqlite3_step(stmt) == SQLITE_ROW {
+            let sensor = String(cString: sqlite3_column_text(stmt, 0))
+            let avg = sqlite3_column_double(stmt, 1)
+            let count = sqlite3_column_int(stmt, 2)
+            
+            msg += "\(sensor) - Avg = \(avg), Count = \(count)\n"
+        }
+        sqlite3_finalize(stmt)
+        
+        return msg
     }
 }
