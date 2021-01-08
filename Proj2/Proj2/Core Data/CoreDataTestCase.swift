@@ -73,7 +73,7 @@ class CoreDataTestCase {
             NSExpression(forKeyPath: #keyPath(Reading.value))
         ])
         expression.name = "avg"
-        expression.expressionResultType = .doubleAttributeType
+        expression.expressionResultType = .floatAttributeType
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Reading")
         request.propertiesToFetch = [expression]
@@ -91,7 +91,7 @@ class CoreDataTestCase {
             NSExpression(forKeyPath: #keyPath(Reading.value))
         ])
         avgExpression.name = "avg"
-        avgExpression.expressionResultType = .doubleAttributeType
+        avgExpression.expressionResultType = .floatAttributeType
         
         let countExpression = NSExpressionDescription()
         countExpression.expression = NSExpression(forFunction: "count:", arguments: [

@@ -7,10 +7,18 @@
 
 import Foundation
 
-class FReading: Codable {
+class FReading: Codable, Comparable {
     var timestamp: String
     var sensor_id: String
     var value: Float
+    
+    static func ==(lhs: FReading, rhs: FReading) -> Bool {
+        return lhs.timestamp == rhs.timestamp
+    }
+    
+    static func <(lhs: FReading, rhs: FReading) -> Bool {
+        return lhs.timestamp < rhs.timestamp
+    }
 }
 
 extension DateFormatter {

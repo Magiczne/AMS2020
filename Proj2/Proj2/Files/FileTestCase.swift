@@ -44,14 +44,38 @@ class FileTestCase {
     }
     
     func largestAndSmallest () -> String {
-        return ""
+        let min = self.readingsData.min()
+        let max = self.readingsData.max()
+        
+        return """
+        Smallest: \(min!.timestamp)
+        Largest: \(max!.timestamp)
+        """
     }
     
     func avgReading () -> String {
-        return ""
+        let sum = self.readingsData.reduce(Float.zero, { sum, newVal in
+            return sum + newVal.value
+        })
+        let avg = sum / Float.init(self.readingsData.count)
+        
+        return "Average: \(avg)"
     }
     
     func groupedSensors () -> String {
-        return ""
+        let dict = Dictionary(grouping: self.readingsData, by: { $0.sensor_id })
+            .sorted(by: { $0.0 < $1.0 })
+        
+        var msg = ""
+        for group in dict {
+            let sum = group.value.reduce(Float.zero, { sum, newVal in
+                return sum + newVal.value
+            })
+            let avg = sum / Float.init(group.value.count)
+            
+            msg += "\(group.key) - Avg = \(avg), Count = \(group.value.count)\n"
+        }
+        
+        return msg
     }
 }
