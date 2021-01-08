@@ -43,15 +43,15 @@ class FileTestCase {
         }
     }
     
-    func largestAndSmallest () {
-        
+    func largestAndSmallest () -> String {
+        return ""
     }
     
-    func avgReading () {
-        
+    func avgReading () -> String {
+        return ""
     }
     
-    func groupedSensors () {
-        
+    func groupedSensors () -> String {
+        return ""
     }
 }

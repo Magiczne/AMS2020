@@ -47,7 +47,7 @@ class CoreDataTestCase {
         try? self.context.save()
     }
     
-    func largestAndSmallest () {
+    func largestAndSmallest () -> String {
         let smallestRequest = NSFetchRequest<Reading>(entityName: "Reading")
         let sortAscending = NSSortDescriptor(key: #keyPath(Reading.timestamp), ascending: true)
         smallestRequest.sortDescriptors = [sortAscending]
@@ -61,11 +61,13 @@ class CoreDataTestCase {
         let smallest = try! self.context.fetch(smallestRequest) as [Reading]
         let largest = try! self.context.fetch(largerRequest) as [Reading]
         
-        print("Smallest: \(String(describing: smallest[0].timestamp!))")
-        print("Largest: \(String(describing: largest[0].timestamp!))")
+        return """
+        Smallest: \(String(describing: smallest[0].timestamp!))
+        Largest: \(String(describing: largest[0].timestamp!))
+        """
     }
     
-    func avgReading () {
+    func avgReading () -> String {
         let expression = NSExpressionDescription()
         expression.expression = NSExpression(forFunction: "average:", arguments: [
             NSExpression(forKeyPath: #keyPath(Reading.value))
@@ -80,10 +82,10 @@ class CoreDataTestCase {
         let results = try! self.context.fetch(request)
         let data = results[0] as! [String:Double]
         
-        print("Avg reading: \(data["avg"]!)")
+        return "Avg reading: \(data["avg"]!)"
     }
     
-    func groupedSensors () {
+    func groupedSensors () -> String {
         let avgExpression = NSExpressionDescription()
         avgExpression.expression = NSExpression(forFunction: "average:", arguments: [
             NSExpression(forKeyPath: #keyPath(Reading.value))
@@ -105,8 +107,11 @@ class CoreDataTestCase {
         
         let results = try! self.context.fetch(request) as! [[String:Any]]
         
+        var msg = ""
         for result in results {
-            print("\(result["sensor_id"]!) - Avg = \(result["avg"]!), Count = \(result["count"]!)")
+            msg += "\(result["sensor_id"]!) - Avg = \(result["avg"]!), Count = \(result["count"]!)\n"
         }
+        
+        return msg
     }
 }

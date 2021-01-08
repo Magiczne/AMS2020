@@ -12,11 +12,20 @@ class ViewController: UIViewController {
     
     var start: DispatchTime = DispatchTime.now()
     var end: DispatchTime = DispatchTime.now()
+    var fileTestRan: Bool = false
     let file = "readings-1000"
     
     let fileTestCase = FileTestCase()
     let sqliteTestCase = SQLiteTestCase()
     let coreDataTestCase = CoreDataTestCase()
+    
+    func updateTextViewText(_ msg: String, clear: Bool = false) {
+        if (clear) {
+            self.textView.text = ""
+        }
+        
+        self.textView.text = "\(self.textView.text!)\n\(msg)"
+    }
     
     func startMeasure() {
         self.start = DispatchTime.now()
@@ -28,7 +37,9 @@ class ViewController: UIViewController {
         let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
         let timeInterval = Double(nanoTime) / 1_000_000_000
         
-        print("\(tag) finished in \(timeInterval) seconds\n")
+        let message = "\(tag) finished in \(timeInterval) seconds\n"
+        
+        self.updateTextViewText(message, clear: true)
     }
     
     @IBAction func onFileTest() {
@@ -36,29 +47,41 @@ class ViewController: UIViewController {
         self.fileTestCase.loadData(self.file)
         self.stopMeasure("File loading test")
         
-        self.fileTestCase.largestAndSmallest()
-        self.fileTestCase.avgReading()
-        self.fileTestCase.groupedSensors()
+        self.updateTextViewText(self.fileTestCase.largestAndSmallest() + "\n")
+        self.updateTextViewText(self.fileTestCase.avgReading() + "\n")
+        self.updateTextViewText(self.fileTestCase.groupedSensors() + "\n")
+        
+        self.fileTestRan = true
     }
     
     @IBAction func onSQLiteTest() {
+        if (!self.fileTestRan) {
+            self.updateTextViewText("You need to run file test first", clear: true)
+            return
+        }
+        
         self.startMeasure()
         self.sqliteTestCase.loadData(sensors: self.fileTestCase.sensorsData, readings: self.fileTestCase.readingsData)
         self.stopMeasure("SQLite loading test")
         
-        self.sqliteTestCase.largestAndSmallest()
-        self.sqliteTestCase.avgReading()
-        self.sqliteTestCase.groupedSensors()
+        self.updateTextViewText(self.sqliteTestCase.largestAndSmallest() + "\n")
+        self.updateTextViewText(self.sqliteTestCase.avgReading() + "\n")
+        self.updateTextViewText(self.sqliteTestCase.groupedSensors() + "\n")
     }
     
     @IBAction func onCoreDataTest() {
+        if (!self.fileTestRan) {
+            self.updateTextViewText("You need to run file test first", clear: true)
+            return
+        }
+        
         self.startMeasure()
         self.coreDataTestCase.loadData(sensors: self.fileTestCase.sensorsData, readings: self.fileTestCase.readingsData)
         self.stopMeasure("Core Data loading test")
         
-        self.coreDataTestCase.largestAndSmallest()
-        self.coreDataTestCase.avgReading()
-        self.coreDataTestCase.groupedSensors()
+        self.updateTextViewText(self.coreDataTestCase.largestAndSmallest() + "\n")
+        self.updateTextViewText(self.coreDataTestCase.avgReading() + "\n")
+        self.updateTextViewText(self.coreDataTestCase.groupedSensors() + "\n")
     }
 }
 
