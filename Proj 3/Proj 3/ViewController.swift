@@ -5,6 +5,7 @@
 //  Created by Magiczne on 15/01/2021.
 //
 
+import CoreImage
 import UIKit
 
 class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDelegate, URLSessionTaskDelegate {
@@ -39,13 +40,25 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
             let task = session.downloadTask(with: URL(string: image)!)
             
             self.progress[task.taskIdentifier] = 0
+            self.updateTextViewAsync(taskIdentifier: task.taskIdentifier, message: "Started: \(image)")
             
             task.resume()
         }
     }
     
+    func recognizeFace(_ url: URL, taskIdentifier: Int) {
+        DispatchQueue.global(qos: .background).async {
+            self.updateTextViewAsync(taskIdentifier: taskIdentifier, message: "Started face detection")
+            
+            let detector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
+            let faces = detector?.features(in: CIImage(contentsOf: url)!)
+            
+            self.updateTextViewAsync(taskIdentifier: taskIdentifier, message: "Detected \(faces?.count) faces")
+        }
+    }
+    
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        self.updateTextViewAsync(taskIdentifier: downloadTask.taskIdentifier, message: "Finished")
+        self.updateTextViewAsync(taskIdentifier: downloadTask.taskIdentifier, message: "Finished \(location.path)")
         
         let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let destinationUrl = documentsDirectoryURL.appendingPathComponent("image-\(downloadTask.taskIdentifier).jpg")
@@ -58,9 +71,12 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
         
         if FileManager.default.fileExists(atPath: location.path) {
             try! FileManager.default.copyItem(atPath: location.path, toPath: destinationUrl.path)
+            self.updateTextViewAsync(taskIdentifier: downloadTask.taskIdentifier, message: "Copied to \(destinationUrl.path)")
         } else {
             print("\(location.path) does not exist")
         }
+        
+        self.recognizeFace(destinationUrl, taskIdentifier: downloadTask.taskIdentifier)
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
@@ -70,6 +86,10 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
             self.updateTextViewAsync(taskIdentifier: downloadTask.taskIdentifier, message: "Progress \(progress / 10 * 10)%")
             self.progress[downloadTask.taskIdentifier] = Int(progress / 10)
         }
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
+        print("Resumed \(downloadTask.taskIdentifier)")
     }
 }
 
