@@ -18,6 +18,8 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
         "https://upload.wikimedia.org/wikipedia/commons/c/c8/Valmy_Battle_painting.jpg"
     ]
     
+    var progress: [Int:Int] = [:]
+    
     func updateTextViewAsync (taskIdentifier: Int, message: String) {
         DispatchQueue.main.async {
             let msg = "[Task \(taskIdentifier)] - \(message)"
@@ -35,6 +37,9 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
         
         for image in self.images {
             let task = session.downloadTask(with: URL(string: image)!)
+            
+            self.progress[task.taskIdentifier] = 0
+            
             task.resume()
         }
     }
@@ -45,17 +50,26 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
         let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let destinationUrl = documentsDirectoryURL.appendingPathComponent("image-\(downloadTask.taskIdentifier).jpg")
         
-        if FileManager.default.fileExists(atPath: destinationUrl.relativeString) {
-            try! FileManager.default.removeItem(at: location)
+        if FileManager.default.fileExists(atPath: destinationUrl.path) {
+            try! FileManager.default.removeItem(atPath: destinationUrl.path)
+        } else {
+            print("\(destinationUrl.path) does not exist")
         }
         
-        try! FileManager.default.copyItem(at: location, to: destinationUrl)
+        if FileManager.default.fileExists(atPath: location.path) {
+            try! FileManager.default.copyItem(atPath: location.path, toPath: destinationUrl.path)
+        } else {
+            print("\(location.path) does not exist")
+        }
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        let progress = Float.init(totalBytesWritten) / Float.init(totalBytesExpectedToWrite)
+        let progress = Int((Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)) * 100)
         
-        self.updateTextViewAsync(taskIdentifier: downloadTask.taskIdentifier, message: "Progress \(progress)")
+        if progress / 10 > self.progress[downloadTask.taskIdentifier]! {
+            self.updateTextViewAsync(taskIdentifier: downloadTask.taskIdentifier, message: "Progress \(progress / 10 * 10)%")
+            self.progress[downloadTask.taskIdentifier] = Int(progress / 10)
+        }
     }
 }
 
