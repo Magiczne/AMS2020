@@ -8,6 +8,16 @@
 import CoreImage
 import UIKit
 
+struct BackgroundJob {
+    var url: URL
+    var taskIdentifier: Int
+    
+    init(url: URL, taskIdentifier: Int) {
+        self.url = url
+        self.taskIdentifier = taskIdentifier
+    }
+}
+
 class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDelegate, URLSessionTaskDelegate {
     @IBOutlet weak var textView: UITextView!
     
@@ -18,8 +28,23 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
         "https://upload.wikimedia.org/wikipedia/commons/3/36/Quentin_Matsys_-_A_Grotesque_old_woman.jpg",
         "https://upload.wikimedia.org/wikipedia/commons/c/c8/Valmy_Battle_painting.jpg"
     ]
-    
     var progress: [Int:Int] = [:]
+    var pendingJobs: [BackgroundJob] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func appMovedToForeground() {
+        for job in self.pendingJobs {
+            self.recognizeFace(job.url, taskIdentifier: job.taskIdentifier)
+        }
+        
+        self.pendingJobs.removeAll()
+    }
     
     func updateTextViewAsync (taskIdentifier: Int, message: String) {
         DispatchQueue.main.async {
@@ -53,7 +78,7 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
             let detector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: [CIDetectorAccuracy: CIDetectorAccuracyHigh])
             let faces = detector?.features(in: CIImage(contentsOf: url)!)
             
-            self.updateTextViewAsync(taskIdentifier: taskIdentifier, message: "Detected \(faces?.count) faces")
+            self.updateTextViewAsync(taskIdentifier: taskIdentifier, message: "Detected \(faces!.count) faces")
         }
     }
     
@@ -76,7 +101,11 @@ class ViewController: UIViewController, URLSessionDelegate, URLSessionDownloadDe
             print("\(location.path) does not exist")
         }
         
-        self.recognizeFace(destinationUrl, taskIdentifier: downloadTask.taskIdentifier)
+        if (UIApplication.shared.applicationState == .background || UIApplication.shared.applicationState == .inactive) {
+            self.pendingJobs.append(BackgroundJob(url: destinationUrl, taskIdentifier: downloadTask.taskIdentifier))
+        } else {
+            self.recognizeFace(destinationUrl, taskIdentifier: downloadTask.taskIdentifier)
+        }
     }
     
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
